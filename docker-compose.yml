@@ -1,0 +1,27 @@
+services:
+  # FastAPI application
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/code/app # syncs local folder with container (Hot Reload)
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://user:password@db/inventory_db
+    depends_on:
+      - db
+
+  # The DB
+  db:
+    image: postgres:15-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # persists data even if container dies
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=inventory_db
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:
