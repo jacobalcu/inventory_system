@@ -5,7 +5,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./app:/code/app # syncs local folder with container (Hot Reload)
+      - .:/code # syncs local folder with container (Hot Reload)
     environment:
       - DATABASE_URL=postgresql+asyncpg://user:password@db/inventory_db
     depends_on:
